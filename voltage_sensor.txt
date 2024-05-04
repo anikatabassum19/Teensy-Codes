@@ -1,0 +1,19 @@
+ 
+const int VOLTAGE_SENSOR_PIN = A0; // Analog input pin
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Read voltage sensor
+  int sensorValue = analogRead(VOLTAGE_SENSOR_PIN);
+  float voltage = sensorValue * (3.3 / 1023.0); // Convert sensor value to voltage (assuming 3.3V reference)
+
+  // Print voltage
+  Serial.print("Voltage: ");
+  Serial.print(voltage);
+  Serial.println(" V");
+
+  delay(1000); // Delay to avoid flooding the serial monitor
+}

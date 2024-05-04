@@ -1,0 +1,37 @@
+ 
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BMP280.h>
+
+#define BMP_SDA_PIN 18
+#define BMP_SCL_PIN 19
+
+Adafruit_BMP280 bmp;
+
+void setup() {
+  Serial.begin(9600);
+  Wire.setSDA(BMP_SDA_PIN);
+  Wire.setSCL(BMP_SCL_PIN);
+  Wire.begin();
+  if (!bmp.begin(0x76)) { // 0x76 or 0x77 depending on your sensor
+    Serial.println("Could not find a valid BMP280 sensor, check wiring!");
+    while (1);
+  }
+}
+
+void loop() {
+  Serial.print("Temperature: ");
+  Serial.print(bmp.readTemperature());
+  Serial.print(" *C");
+
+  Serial.print("\tPressure: ");
+  Serial.print(bmp.readPressure() / 100.0F); // Convert to hPa
+
+  // Read and print real-time altitude
+  float altitude = bmp.readAltitude();
+  Serial.print("\tAltitude: ");
+  Serial.print(altitude);
+  Serial.println(" meters");
+
+  delay(1000); // Wait for a second between readings
+}

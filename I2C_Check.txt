@@ -1,0 +1,27 @@
+ 
+#include <Wire.h>
+
+#define MPU6050_ADDRESS 0x68 // MPU6050 I2C address
+
+void setup() {
+  // Initialize Wire1 with predefined pins for Teensy 4.1
+  Wire1.begin();
+
+  Serial.begin(9600);
+  delay(1000);
+}
+
+void loop() {
+  // Start communication with MPU6050
+  Wire1.beginTransmission(MPU6050_ADDRESS);
+  byte error = Wire1.endTransmission();
+
+  // Check if MPU6050 responded
+  if (error == 0) {
+    Serial.println("MPU6050 found on secondary I2C bus (Wire1).");
+  } else {
+    Serial.println("MPU6050 not found on secondary I2C bus (Wire1).");
+  }
+
+  delay(1000); // Delay for readability
+}
